@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--esse eh o layout de detalhamento do carro clicado na lista, ele será apenas uma base-->
+<!--que adiciona a toolbar e um outro layout, este com o conteudo msm da tela-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.livroandroid.carros.activity.CarroActivity"
+    android:orientation="vertical">
+
+    <!--inclui a toolbar-->
+    <include layout="@layout/include_toolbar" />
+    <!--inclui o layout de conteudo-->
+    <include layout="@layout/activity_carro_contents"/>
+
+</LinearLayout>
