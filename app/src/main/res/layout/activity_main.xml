@@ -8,18 +8,61 @@
     android:fitsSystemWindows="true">
 
     <!-- bloco 1: conteudo base da tela -->
-    <LinearLayout
-        android:id="@+id/content"
+    <!--layout q coordena o movimento e a interacao das views filhas, principalmente na rolagem de tela-->
+    <!--precisa ser usado para criar animacoes na rolagem; é o container base-->
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+    <!--AppBarLayout: subclasse de LinearLayout; cria a app bar, espaco q fica entre a Toolbar e os componentes como as tabs-->
+        <!--controla os scrolls dos filhos(nesse caso a toolbar e a tablayout), permitindo criar-->
+        <!--o efeito de expandir e diminuir a toolbar conforme a rolagem-->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <!-- incluindo toolbar -->
     <include layout="@layout/include_toolbar" />
 
+    <!--conteudo layout para TABS + VIEWPAGER(SCROLL LATERAL)-->
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabLayout"
+            android:background="@color/primary"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
 
-    </LinearLayout> <!-- fim bloco 1 -->
+    </android.support.design.widget.AppBarLayout>
+
+
+        <!--view pager, vai ser preenchido por um adapter-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+
+        <!--floating button(botao + no canto da tela)-->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="#fff000" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
 
     <!-- bloco 2: componente nav drawer view -->
     <android.support.design.widget.NavigationView

@@ -6,4 +6,7 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/AppTheme.AppBarOverlay"
-    app:popupTheme="@style/AppTheme.PopupOverlay"  />
+    app:popupTheme="@style/AppTheme.PopupOverlay"
+    app:layout_scrollFlags="scroll|enterAlways"/>
+<!--layout_scrollFlags: tag para usar efeito de desaparecer ao rolar a tela-->
+<!--para isso essa toolbar tem q estar dentro de uma AppBarLayout, q por sua vez deve estar dentro de um CoodinatorLayout -->

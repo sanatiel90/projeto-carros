@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:scaleType="center" />
 
-        <!--q view é essa?-->
+        <!--q view é essa? ACHO Q É A LINHA DIVISORIA ENTRE FOTO E TEXTO-->
         <View
             android:layout_width="match_parent"
             android:background="#E0E0E0"
