@@ -15,36 +15,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!--AppBarLayout: subclasse de LinearLayout; cria a app bar, espaco q fica entre a Toolbar e os componentes como as tabs-->
+        <!--AppBarLayout: subclasse de LinearLayout; cria a app bar, espaco q fica entre a Toolbar e os componentes como as tabs-->
         <!--controla os scrolls dos filhos(nesse caso a toolbar e a tablayout), permitindo criar-->
         <!--o efeito de expandir e diminuir a toolbar conforme a rolagem-->
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-    <!-- incluindo toolbar -->
-    <include layout="@layout/include_toolbar" />
-
-    <!--conteudo layout para TABS + VIEWPAGER(SCROLL LATERAL)-->
-        <android.support.design.widget.TabLayout
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tabLayout"
-            android:background="@color/primary"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <!-- incluindo toolbar -->
+            <include layout="@layout/include_toolbar" />
+
+            <!--conteudo layout para TABS + VIEWPAGER(SCROLL LATERAL)-->
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabLayout" />
 
 
-    </android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.AppBarLayout>
 
 
         <!--view pager, vai ser preenchido por um adapter-->
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:background="@android:color/white"
+            android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
@@ -73,8 +69,8 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_drawer_header"
         app:menu="@menu/nav_drawer_menu"/>
-        <!--app:headerLayout= informando qual o layout de cabeçalho do drawer -->
-        <!--app:menu= informando qual o layout com opcoes de menu do drawer -->
+    <!--app:headerLayout= informando qual o layout de cabeçalho do drawer -->
+    <!--app:menu= informando qual o layout com opcoes de menu do drawer -->
 
 
 </android.support.v4.widget.DrawerLayout>
