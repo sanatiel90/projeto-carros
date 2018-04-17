@@ -19,8 +19,11 @@ import br.com.livroandroid.carros.domain.Carro
 import br.com.livroandroid.carros.domain.CarroService
 import br.com.livroandroid.carros.domain.TipoCarro
 import br.com.livroandroid.carros.extensions.toast
+import br.com.livroandroid.carros.utils.AndroidUtils
 import kotlinx.android.synthetic.main.fragment_carros.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.uiThread
 
 /**
  * A simple [Fragment] subclass.
@@ -76,12 +79,31 @@ class CarrosFragment : BaseFragment() {
         taskCarros()
     }
 
+    //doAsync: met da lib Anko que executa uma lambda de forma assincrona; executa o cód. dentro dela em uma thread separada (assim como Thread.run())
+    //uiThread: met da lib Anko que executa uma lamba na UI Thread; usa um Handler internamente na thread paralela, para poder atualizar os novos dados na Thread principal
     fun taskCarros(){
+        //verificar se existe conexao com a net
+        if(!AndroidUtils.isNetworkAvaliable(context)){
+            toast("Não há conexão com a internet")
+        }
+        //abre uma thread
+        doAsync {
+            //busca os carros
+            carros = CarroService.getCarros(tipo)
+            //atualiza a lista na UI Thread
+            uiThread {
+                recyclerView.adapter = CarroAdapter(carros) {onClickCarro(it) }
+            }
+
+        }
+
+        /*PROCEDIMENTO ANTIGO, Q FAZ REQUISICAO A UM ARQUIVO ESTATICO DA PASTA RAW
         //busca os carros, acessando estaticamente o metodo getCarros do Singleton CarroService
+
         this.carros = CarroService.getCarros(context, tipo)
         //atualiza a lista, criando um Adapter  (informando um array de carros e uma funcao lambda q trata o evento de click no card do carro)
         recyclerView.adapter = CarroAdapter(carros) { onClickCarro(it) }
-
+        */
     }
 
     fun onClickCarro(carro: Carro){

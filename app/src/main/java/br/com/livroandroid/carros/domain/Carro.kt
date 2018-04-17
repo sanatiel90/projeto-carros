@@ -2,6 +2,7 @@ package br.com.livroandroid.carros.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
@@ -16,6 +17,9 @@ class Carro() : Parcelable{
     var desc = ""
     var urlFoto = ""
     var urlInfo = ""
+    //se o nome do campo equivalente no web service ou arquivo estatico estiver diferente do declarado na classe, utilize essa notacao pra indicar
+    //qual o nome que esta configurado no web service/arquivo
+    //@SerializedName("url_video")
     var urlVideo = ""
     var latitude = ""
     var longitude = ""

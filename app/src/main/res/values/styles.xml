@@ -1,5 +1,5 @@
 <resources>
-    <!-- Tema-base -->
+    <!-- Tema-base(nao contem a action bar padrao, pois esta sera add manualmente) -->
     <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Cor primária do aplicativo -->
         <item name="colorPrimary">@color/primary</item>
