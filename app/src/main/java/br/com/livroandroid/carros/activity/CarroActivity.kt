@@ -2,12 +2,17 @@ package br.com.livroandroid.carros.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import br.com.livroandroid.carros.R
 import br.com.livroandroid.carros.domain.Carro
+import br.com.livroandroid.carros.domain.CarroService
 import br.com.livroandroid.carros.extensions.loadUrl
 import br.com.livroandroid.carros.extensions.setupToolbar
 import kotlinx.android.synthetic.main.activity_carro.*
 import kotlinx.android.synthetic.main.activity_carro_contents.*
+import org.jetbrains.anko.*
 
 class CarroActivity : BaseActivity() {
 
@@ -34,5 +39,50 @@ class CarroActivity : BaseActivity() {
         //variaveis tDesc e img geradas automaticamente pelo Kotlin Extensions
         tDesc.text = carro.desc
         appBarImg.loadUrl(carro.urlFoto) //usando imageview do cabeçalho da AppBarLayout do xml referente ao detalhamento de carros
+    }
+
+    //inflando(transf de xml para obj) menu para editar ou deletar
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_carro, menu)
+        return true
+    }
+
+    //eventos do menu
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            //menu editar chamada a tela de editar e fecha a tela de detalhamento
+            R.id.action_editar -> {
+                startActivity<CarroFormActivity>("carro" to carro)
+                finish()
+            }
+
+            R.id.action_deletar -> {
+                //class alert da lib anko para confirmar a deleção
+                alert(R.string.msg_confirm_excluir_carro, R.string.app_name){
+                    positiveButton(R.string.sim){
+                        //confirmou o excluir
+                        taskExcluir()
+                    }
+                    negativeButton(R.string.nao){
+                        //nao confirmou, nao acontece nada
+                    }
+
+                }.show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    //funcao q exclui carro do ws e fecha a tela
+    fun taskExcluir(){
+        doAsync {
+            val response = CarroService.delete(carro)
+            uiThread {
+                toast(response.msg)
+                finish()
+            }
+        }
     }
 }

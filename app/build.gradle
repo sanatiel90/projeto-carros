@@ -41,5 +41,10 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //goggle gson - parser para json
     implementation 'com.google.code.gson:gson:2.8.0'
-
+    //lib okhttp para requisicoes http
+    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    //google room - lib para trabalhar com sqlite
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
 }

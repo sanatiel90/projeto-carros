@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import br.com.livroandroid.carros.R
 import br.com.livroandroid.carros.extensions.fromJson
+import br.com.livroandroid.carros.extensions.toJson
+import br.com.livroandroid.carros.utils.HttpHelper
 import org.json.JSONArray
 import java.net.URL
 
@@ -14,18 +16,39 @@ import java.net.URL
 //a palavra object transforma essa class num Singleton
 object CarroService {
     private val TAG = "livro" //para os logs LogCat
+    //endpoint da API q vai ser acessada
+    private val BASE_URL = "http://livrowebservices.com.br/rest/carros"
 
     //busca os carros por tipo e retorna uma lista de carros
     fun getCarros(tipo: TipoCarro): List<Carro>{
-       val url = "http://livrowebservices.com.br/rest/carros/tipo/${tipo.name}"
+       val url = "$BASE_URL/tipo/${tipo.name}"
        Log.d(TAG,url)
       //fazendo uma requisicao HTTP GET simples e pegando o json retornado
-       val json = URL(url).readText()
+    //   val json = URL(url).readText()
+        //fazendo req GET usando okhttp(metodo foi criado na classe utils HttpHelper)
+       val json = HttpHelper.get(url)
        val carros = fromJson<List<Carro>>(json)
        Log.d(TAG,"${carros.size} carros encontrados")
        return carros
     }
 
+    //salva um carro
+    fun save(carro: Carro): Response{
+        //faz um POST do json carro (usando o met toJson q foi criado para converter obj em json)
+        val json = HttpHelper.post(BASE_URL, carro.toJson())
+        //usando met fromJson q foi criado para converter o json de resposta em obj(nesse caso um obj da classe Response)
+        val response = fromJson<Response>(json)
+        return response
+    }
+
+    //deleta um carro
+    fun delete(carro: Carro): Response{
+        //informando na url o id a ser deletado
+        val url = "$BASE_URL/${carro.id}"
+        val json = HttpHelper.delete(url)
+        val response = fromJson<Response>(json)
+        return response
+    }
 
 
     /*

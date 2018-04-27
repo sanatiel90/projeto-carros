@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
@@ -15,6 +16,7 @@ import br.com.livroandroid.carros.R
 import br.com.livroandroid.carros.adapter.TabsAdapter
 import br.com.livroandroid.carros.domain.TipoCarro
 import br.com.livroandroid.carros.extensions.setupToolbar
+import br.com.livroandroid.carros.utils.Prefs
 import kotlinx.android.synthetic.main.activity_main.*
 
 import org.jetbrains.anko.startActivity
@@ -31,9 +33,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setupViewPagerTabs()
 
         fab.setOnClickListener(){
-//            Snackbar: alerta na parte inferior da tela
-            val snack = Snackbar.make(it, "Clicou no FAB", Snackbar.LENGTH_SHORT)
-            snack.show()
+            //   Snackbar: alerta na parte inferior da tela
+          //  val snack = Snackbar.make(it, "Clicou no FAB", Snackbar.LENGTH_SHORT)
+           // snack.show()
+            //ao clicar no FAB, chamar form de novo carro
+           startActivity<CarroFormActivity>()
         }
     }
 
@@ -56,7 +60,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    //met para setas tabs com tipos dos carros
+    //met para setar tabs com tipos dos carros
     private fun setupViewPagerTabs(){
         //configura a view pager + tabs (var pegues pelo id devido kotlin extensions)
         //manter viva na memoria + 2 tabs alem da q esta selecionada
@@ -68,7 +72,27 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         //cor branca no texto
         val cor = ContextCompat.getColor(context, R.color.white)
         tabLayout.setTabTextColors(cor, cor)
+
+        //salva e recupera a ultima tab acessada
+        //recupera indice da tab
+        val tabIdx = Prefs.getInt("tabIdx")
+        //informa ao viewPager o indice da tab atual
+        viewPager.currentItem = tabIdx
+        //add um listener(evento) no clique das tabs; a sintaxa object : ViewPager.OnPageChangeListener é uma Object Expressions, q implementa
+        //uma interface de forma anonima no codigo, sem precisar criar uma classe
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(p0: Int) {}
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
+            override fun onPageSelected(page: Int) {
+                //salva o indice da pagina/tab selecionada
+                Prefs.setInt("tabIdx", page)
+            }
+
+        })
     }
+
+
+
 
     //trata o evento do NavDrawer
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

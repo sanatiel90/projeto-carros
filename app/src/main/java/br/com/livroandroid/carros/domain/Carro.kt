@@ -1,5 +1,7 @@
 package br.com.livroandroid.carros.domain
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -10,7 +12,10 @@ import java.io.Serializable
  */
 //class especie de model, usa a interface Serializable para serializar os dados passados de act para act
 //ao inves da Serializable, sera usada a Parcelable, q segundo a Google é mais performatica no caso de passar parametros grandes para outras act
+//usando anotation da lib Room para indicar q essa classe vai ser mapeada para um banco de dados sqlite
+@Entity(tableName = "carro")
 class Carro() : Parcelable{
+    @PrimaryKey
     var id:Long = 0
     var tipo = ""
     var nome = ""
