@@ -63,5 +63,8 @@ Versao %s<br><br>
     <string name="msg_confirm_excluir_carro">Confirma exclusão desse carro?</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="msg_carro_favoritado">Carro adicionado aos favoritos</string>
+    <string name="msg_carro_desvaforitado">Carro removido dos favoritos</string>
 
 </resources>

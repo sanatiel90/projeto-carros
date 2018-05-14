@@ -8,6 +8,7 @@ import android.view.MenuItem
 import br.com.livroandroid.carros.R
 import br.com.livroandroid.carros.domain.Carro
 import br.com.livroandroid.carros.domain.CarroService
+import br.com.livroandroid.carros.domain.FavoritosService
 import br.com.livroandroid.carros.extensions.loadUrl
 import br.com.livroandroid.carros.extensions.setupToolbar
 import kotlinx.android.synthetic.main.activity_carro.*
@@ -33,6 +34,9 @@ class CarroActivity : BaseActivity() {
         setupToolbar(R.id.toolbar,carro.nome, true)
         //atualiza os dados na tela
         initViews()
+
+        //evento botao fab coracao; para favoritar
+        fab.setOnClickListener { onClickFavoritar(carro) }
     }
 
     fun initViews(){
@@ -82,6 +86,17 @@ class CarroActivity : BaseActivity() {
             uiThread {
                 toast(response.msg)
                 finish()
+            }
+        }
+    }
+
+    //add ou remove carro dos favort
+    fun onClickFavoritar(carro: Carro){
+        doAsync {
+            val favoritado = FavoritosService.favoritar(carro)
+            uiThread {
+                //alerta de sucesso
+                toast(if(favoritado) R.string.msg_carro_favoritado else R.string.msg_carro_desvaforitado)
             }
         }
     }

@@ -34,18 +34,21 @@ import org.jetbrains.anko.uiThread
  * create an instance of this fragment.
  */
 //herda da BaseFragment criada
-class CarrosFragment : BaseFragment() {
+open class CarrosFragment : BaseFragment() {
 
     //var privada da Enum TipoCarro,  vai receber uma das enuns enumeradas lá(classicos esportivos ou luxo)
     private var tipo: TipoCarro = TipoCarro.classicos
-    //array q vai conter os carros, buscados num web service
-    private var carros = listOf<Carro>()
+    //array q vai conter os carros, buscados num web service; é protected pois vai ser acessado pela FavoritosFragment
+    protected var carros = listOf<Carro>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //le o paramentro enviado pelo Bundle(vai ser classicos esportivos ou luxo) e converte para TipoCarro
-        tipo = arguments.getSerializable("tipo") as TipoCarro
+        if(arguments != null){
+            tipo = arguments.getSerializable("tipo") as TipoCarro
+        }
+
     }
 
     //cria a view do fragment
@@ -81,7 +84,8 @@ class CarrosFragment : BaseFragment() {
 
     //doAsync: met da lib Anko que executa uma lambda de forma assincrona; executa o cód. dentro dela em uma thread separada (assim como Thread.run())
     //uiThread: met da lib Anko que executa uma lamba na UI Thread; usa um Handler internamente na thread paralela, para poder atualizar os novos dados na Thread principal
-    fun taskCarros(){
+    //open para poder ser estendida pela FavoritosFragment
+    open fun taskCarros(){
         //verificar se existe conexao com a net
         if(!AndroidUtils.isNetworkAvaliable(context)){
             toast("Não há conexão com a internet")
@@ -106,7 +110,8 @@ class CarrosFragment : BaseFragment() {
         */
     }
 
-    fun onClickCarro(carro: Carro){
+    //open para poder ser estendida pela FavoritosFragment
+    open fun onClickCarro(carro: Carro){
         //chama a act q detalha o carro clicado, o obj do carro clicado eh passado como param pra la
         activity.startActivity<CarroActivity>("carro" to carro)
     }

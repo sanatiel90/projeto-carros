@@ -21,6 +21,7 @@
 
 </android.support.v4.widget.NestedScrollView>
 
+
     <!--layout da App Bar-->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

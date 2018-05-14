@@ -63,8 +63,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     //met para setar tabs com tipos dos carros
     private fun setupViewPagerTabs(){
         //configura a view pager + tabs (var pegues pelo id devido kotlin extensions)
-        //manter viva na memoria + 2 tabs alem da q esta selecionada
-        viewPager.offscreenPageLimit = 2
+        //manter viva na memoria + 3 tabs alem da q esta selecionada
+        viewPager.offscreenPageLimit = 3
         //atribuindo o adapter (q contem o conteudo) para a view pager
         viewPager.adapter = TabsAdapter(context, supportFragmentManager)
         //atribuindo a view pager para a tab
